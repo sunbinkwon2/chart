@@ -1,0 +1,32 @@
+{
+  "name": "lc-server",
+  "version": "1.0.0",
+  "description": "Chart server with Express + LightningChart",
+  "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@lightningchart/lcjs": "^8.1.1",
+    "@lightningchart/lcjs-headless": "^2.0.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3",
+    "winston": "^3.19.0",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "eslint": "^9.39.2",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
