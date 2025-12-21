@@ -1,35 +1,62 @@
+import express from 'express';
+import dotenv from 'dotenv';
+import path from 'path';
+
+const env = process.env.NODE_ENV || 'local';
+let envPath: string;
+
+switch (env) {
+  case 'local':
+    envPath = path.resolve(__dirname, '../env/.env.local');
+    break;
+  case 'development':
+    envPath = path.resolve(__dirname, '../env/.env.dev');
+    break;
+  case 'production':
+    envPath = path.resolve(__dirname, '../env/.env.prod');
+    break;
+  default:
+    envPath = path.resolve(__dirname, '../env/.env.local');
+}
+
+dotenv.config({ path: envPath });
+console.log('Loaded env file:', envPath);
+
+// ===============================
+// env 파일 선택
+// ===============================
+dotenv.config({
+  path: `.env.${env}`,
+});
+
+const app = express();
+app.use(express.json());
+
+// ===============================
+// 환경별 catch-all 응답
+// ===============================
+
+app.use('/api/v1/chart', (req, res) => {
+  res.json({
+    env,
+    message: 'Chart server running',
+    path: req.originalUrl,
+  });
+});
+
+const port = process.env.PORT;
+
+app.listen(port, () => {
+  console.log(`🚀 [${env}] Chart server running on ${port}`);
+});
+
+
 // server.js
 // const express = require("express");
 // const { lightningChart, renderToPNG } = require("@lightningchart/lcjs-headless");
 // const { Themes } = require("@lightningchart/lcjs");
 // const { PNG } = require("pngjs");
 // const fs = require("fs"); // 파일 시스템에 저장할 필요가 없으므로 주석 처리
-
-import 'dotenv/config';
-import express from 'express';
-import api from './api';
-
-// index.ts or api.ts
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-
-const app = express();
-app.use(express.json());
-app.use('/api', api);
-
-// ⭐ 모든 페이지 요청 처리
-app.use('*', (req, res) => {
-  res.status(200).send('Chart server is running');
-});
-
-const port = process.env.PORT || 8080;
-
-app.listen(port, () => {
-  console.log(`🚀 Chart server running on ${port}`);
-});
-
 
 // const app = express();
 // const port = 3000;

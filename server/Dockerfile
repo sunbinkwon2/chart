@@ -4,6 +4,7 @@ FROM node:20-bullseye-slim
 # System dependencies
 # (LightningChart + OpenGL + Xvfb)
 # ===============================
+
 RUN apt-get update && apt-get install -y \
     python3 \
     build-essential \
@@ -53,9 +54,5 @@ RUN npm run build
 # ===============================
 # Runtime
 # ===============================
-ENV NODE_ENV=production
-ENV DISPLAY=:99
-
 EXPOSE 8080
-
-CMD ["xvfb-run", "-s", "-ac -screen 0 1280x720x24", "node", "dist/index.js"]
+CMD xvfb-run -s "-ac -screen 0 1280x720x24" node dist/index.js

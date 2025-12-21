@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  envDir: './env', // env 파일이 있는 디렉토리
   server: {
     port: 3000,
     strictPort: true, // 3000 못 쓰면 실행 실패

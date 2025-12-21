@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Chart server with Express + LightningChart",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "local": "NODE_ENV=local nodemon --watch src --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },

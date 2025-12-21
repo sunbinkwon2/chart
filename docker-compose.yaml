@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: ${LCJS_NGINX_IMAGE}
+    container_name: lcjs-nginx
+    ports:
+      - "${NGINX_PORT}:80"
+    # volumes:
+    #   - ${NGINX_CONF}:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - lcjs-server1
+      - lcjs-server2
+      - lcjs-server3
+      - lcjs-client
+
+  lcjs-server1:
+    image: ${LCJS_SERVER_IMAGE}
+    container_name: lcjs-server1
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - ${SERVER_PORT}:3001
+
+  lcjs-server2:
+    image: ${LCJS_SERVER_IMAGE}
+    container_name: lcjs-server2
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - ${SERVER_PORT}:3002
+
+  lcjs-server3:
+    image: ${LCJS_SERVER_IMAGE}
+    container_name: lcjs-server3
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - ${SERVER_PORT}:3003
+
+  lcjs-client:
+    image: ${LCJS_CLIENT_IMAGE}
+    container_name: lcjs-client
+    environment:
+      - NODE_ENV=${NODE_ENV}
