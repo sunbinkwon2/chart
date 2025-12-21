@@ -9,10 +9,10 @@ switch (env) {
   case 'local':
     envPath = path.resolve(__dirname, '../env/.env.local');
     break;
-  case 'development':
+  case 'dev':
     envPath = path.resolve(__dirname, '../env/.env.dev');
     break;
-  case 'production':
+  case 'prod':
     envPath = path.resolve(__dirname, '../env/.env.prod');
     break;
   default:
@@ -21,6 +21,8 @@ switch (env) {
 
 dotenv.config({ path: envPath });
 console.log('Loaded env file:', envPath);
+
+const containerName = process.env.CONTAINER_NAME || process.env.HOSTNAME || 'unknown';
 
 // ===============================
 // env 파일 선택
@@ -36,8 +38,9 @@ app.use(express.json());
 // 환경별 catch-all 응답
 // ===============================
 
-app.use('/api/v1/chart', (req, res) => {
+app.get('/api/v1/chart', (req, res) => {
   res.json({
+    containerName,
     env,
     message: 'Chart server running',
     path: req.originalUrl,

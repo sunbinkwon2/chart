@@ -38,7 +38,7 @@ echo "✅ lcjs-server image build complete: $LCJS_SERVER_IMAGE"
 # 3️⃣ lcjs-client 이미지 빌드
 # -----------------------------
 echo "🚀 Building lcjs-client image..."
-docker build -t $LCJS_CLIENT_IMAGE ./client
+docker build --build-arg TARGET_ENV=$ENV -t $LCJS_CLIENT_IMAGE ./client
 echo "✅ lcjs-client image build complete: $LCJS_CLIENT_IMAGE"
 
 

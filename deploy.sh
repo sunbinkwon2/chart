@@ -19,8 +19,9 @@ export $(grep -v '^#' $ENV_FILE | xargs)
 
 echo "🟢 Deploying environment: $ENV"
 echo "   Using environment file: $ENV_FILE"
-echo "   Nginx port: $NGINX_PORT"
-echo "   Client port: $CLIENT_PORT"
+echo "   Nginx port: $NGINX_PORT(external)"
+echo "   Client port: $CLIENT_PORT(internal)"
+echo "   Server port: $SERVER_PORT(internal)"
 
 # -----------------------------
 # 기존 컨테이너 제거

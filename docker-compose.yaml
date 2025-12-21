@@ -6,8 +6,6 @@ services:
     container_name: lcjs-nginx
     ports:
       - "${NGINX_PORT}:80"
-    # volumes:
-    #   - ${NGINX_CONF}:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - lcjs-server1
       - lcjs-server2
@@ -19,24 +17,32 @@ services:
     container_name: lcjs-server1
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:3001
+      - ${SERVER_PORT}:8081
+      - CONTAINER_NAME=lcjs-server1
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
 
   lcjs-server2:
     image: ${LCJS_SERVER_IMAGE}
     container_name: lcjs-server2
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:3002
+      - ${SERVER_PORT}:8082
+      - CONTAINER_NAME=lcjs-server2
 
   lcjs-server3:
     image: ${LCJS_SERVER_IMAGE}
     container_name: lcjs-server3
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:3003
+      - ${SERVER_PORT}:8083
+      - CONTAINER_NAME=lcjs-server3
 
   lcjs-client:
     image: ${LCJS_CLIENT_IMAGE}
     container_name: lcjs-client
     environment:
       - NODE_ENV=${NODE_ENV}
+      - CONTAINER_NAME=lcjs-client
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"

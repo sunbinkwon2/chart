@@ -1,14 +1,23 @@
-<script setup lang="ts">
-import HomeView from './views/HomeView.vue'
-</script>
-
 <template>
   <div>
     <HomeView/>
   </div>
-  
+  <div>
+    <h2>🌍 Env</h2>
+    <ul>
+      <li v-for="(v, k) in env" :key="k">
+        {{ k }} : {{ String(v) }}
+      </li>
+    </ul>
+  </div>
 </template>
-
+<script setup lang="ts">
+  import HomeView from './views/HomeView.vue'
+  const env = {
+    ENV: import.meta.env.VITE_APP_ENV,
+    VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL
+  };
+</script>
 <style scoped>
 .logo {
   height: 6em;

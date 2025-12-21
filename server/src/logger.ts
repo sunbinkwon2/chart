@@ -19,7 +19,7 @@ const logger = winston.createLogger({
 });
 
 // 개발 환경에서 콘솔에 색상 추가
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'prod') {
   logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
