@@ -8,7 +8,7 @@ import lc from "@/lib/lcjs"
 
 export default {
   name: "ScatterChart",
-  props: ["points"],
+  props: ["points", "band"],
   data() {
     // Add the chart to the data in a way that Vue will not attach it's observers to it.
     // If the chart variable would be added in the return object, Vue would attach the observers and
