@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <HomeView/>
-  </div>
-  <div>
-    <h2>🌍 Env</h2>
-    <ul>
-      <li v-for="(v, k) in env" :key="k">
-        {{ k }} : {{ String(v) }}
-      </li>
-    </ul>
-  </div>
+  <router-view />
 </template>
 <script setup lang="ts">
   import HomeView from './views/HomeView.vue'
