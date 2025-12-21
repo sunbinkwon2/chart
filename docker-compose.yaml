@@ -17,7 +17,6 @@ services:
     container_name: lcjs-server1
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:8081
       - CONTAINER_NAME=lcjs-server1
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
@@ -27,7 +26,6 @@ services:
     container_name: lcjs-server2
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:8082
       - CONTAINER_NAME=lcjs-server2
 
   lcjs-server3:
@@ -35,7 +33,6 @@ services:
     container_name: lcjs-server3
     environment:
       - NODE_ENV=${NODE_ENV}
-      - ${SERVER_PORT}:8083
       - CONTAINER_NAME=lcjs-server3
 
   lcjs-client:
