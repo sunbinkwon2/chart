@@ -87,7 +87,7 @@ const generateChartPNG = () => {
     return outputBuff;
 };
 
-app.get("/chart-json", (req, res) => {
+app.get("/api/v1/chart-json", (req, res) => {
     try {
         const chartBuffer = generateChartPNG();
         // Content-Type을 image/png로 설정
@@ -107,7 +107,7 @@ app.get("/chart-json", (req, res) => {
 });
 
 // /chart 경로로 GET 요청이 오면 PNG 차트 반환
-app.get("/chart-png", (req, res) => {
+app.get("/api/v1/chart-png", (req, res) => {
     try {
         const chartBuffer = generateChartPNG();
         // Content-Type을 image/png로 설정
