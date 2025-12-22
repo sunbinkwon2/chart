@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Chart server with Express + LightningChart",
   "scripts": {
-    "local": "NODE_ENV=local nodemon --watch src --exec ts-node src/index.ts",
+    "local": "NODE_ENV=local DOTENV_CONFIG_PATH=env/.env.local nodemon -r dotenv/config --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -17,7 +17,9 @@
     "dotenv": "^17.2.3",
     "express": "^4.22.1",
     "express-async-errors": "^3.1.1",
+    "fs": "^0.0.1-security",
     "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
     "pg": "^8.16.3",
     "pngjs": "^7.0.0",
     "winston": "^3.19.0",
@@ -29,6 +31,7 @@
     "eslint": "^9.39.2",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }

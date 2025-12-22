@@ -1,9 +1,13 @@
 import winston from 'winston';
 import path from 'path';
 
-const logDir = 'logs'; // 로그 저장 폴더
+const logDir = process.env.LOG_DIR; // 로그 저장 폴더
 
-const logger = winston.createLogger({
+if (!logDir) {
+  throw new Error('LOG_DIR is not defined');
+}
+
+export const logger = winston.createLogger({
   level: 'info', // 기본 로그 레벨
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -27,5 +31,3 @@ logger.add(
     ),
   })
 );
-
-export default logger;
