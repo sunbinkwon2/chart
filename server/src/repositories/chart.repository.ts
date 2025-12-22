@@ -5,8 +5,8 @@ import { ChartNotFoundError } from '@/errors/error'
 
 // repositories/repository.ts
 export interface ChartRepository {
-  getData(id: string): Promise<ChartData>;
-  getImage(id: string): Promise<ChartImage>;
+  getData(chartId: string): Promise<ChartData>;
+  getImage(chartId: string): Promise<ChartImage>;
 }
 
 export class FsChartRepository implements ChartRepository {
@@ -19,21 +19,21 @@ export class FsChartRepository implements ChartRepository {
     }
   }
 //ChartNotFoundError
-  async getData(id: string) {
-    const filePath = path.join(this.baseDir, id, 'data.json');
+  async getData(chartId: string) {
+    const filePath = path.join(this.baseDir, chartId, 'data.json');
     try {
       const json = await readFile(filePath, 'utf-8');
       return JSON.parse(json);
     } catch (err: any) {
       if (err?.code === 'ENOENT') {
-        throw new ChartNotFoundError(id);
+        throw new ChartNotFoundError(chartId);
       }
       throw err;
     }
   }
 
-  async getImage(id: string) {
-    const filePath = path.join(this.baseDir, id, 'image.png');
+  async getImage(chartId: string) {
+    const filePath = path.join(this.baseDir, chartId, 'image.png');
 
     try {
       const base64 = await readFile(filePath, 'base64');
@@ -42,9 +42,26 @@ export class FsChartRepository implements ChartRepository {
       };
     } catch (err: any) {
       if (err?.code === 'ENOENT') {
-        throw new ChartNotFoundError(id);
+        throw new ChartNotFoundError(chartId);
       }
       throw err;
     }
+  }
+
+  async saveData(chartId: string, data: any) {
+    const chartDir = path.join(this.baseDir, chartId);
+    await mkdir(chartDir, { recursive: true });
+    await writeFile(path.join(chartDir, 'data.json'), JSON.stringify(data, null, 2));
+  }
+
+  async saveImage(chartId: string, pngBuffer: Buffer) {
+    const chartDir = path.join(this.baseDir, chartId);
+    await mkdir(chartDir, { recursive: true });
+    await writeFile(path.join(chartDir, 'image.png'), pngBuffer);
+  }
+
+  async saveChart(chartId: string, data: any, pngBuffer: Buffer) {
+    await this.saveData(chartId, data);
+    await this.saveImage(chartId, pngBuffer);
   }
 }

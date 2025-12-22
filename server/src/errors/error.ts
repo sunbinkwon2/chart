@@ -18,10 +18,9 @@ export class ChartGeneratingError extends Error {
   }
 }
 
-
 export class ChartNotFoundError extends Error {
-  constructor(id: string) {
-    super(`Chart not found: ${id}`);
+  constructor(chartId: string) {
+    super(`Chart not found: ${chartId}`);
     this.name = 'ChartNotFoundError';
   }
 }

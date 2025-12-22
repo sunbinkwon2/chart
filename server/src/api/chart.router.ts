@@ -14,15 +14,15 @@ router.post('/chart', async ( req: Request<{}, ApiResponse<BaseChartResponse>, B
   }
 );
 
-router.get('/chart/:id/data', async (req: Request<{ id: string }, ApiResponse<ChartData>>, res) => {
-    const result = await chartService.getChartData(req.params.id);
+router.get('/chart/:chartId/data', async (req: Request<{ chartId: string }, ApiResponse<ChartData>>, res) => {
+    const result = await chartService.getChartData(req.params.chartId);
     res.json({ success: true, result });
   }
 );
 
-router.get('/chart/:id/image', async (req: Request<{ id: string }, ApiResponse<ChartImage>>, res) => {
+router.get('/chart/:chartId/image', async (req: Request<{ chartId: string }, ApiResponse<ChartImage>>, res) => {
   const result =
-    await chartService.getChartImage(req.params.id);
+    await chartService.getChartImage(req.params.chartId);
   res.send({ success: true, result });
 });
 

@@ -7,14 +7,9 @@ const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
-    path: '/scatter',
-    name: 'Scatter',
-    component: () => import('@/views/ScatterView.vue')
-  },
-  {
-    path: '/line',
-    name: 'Line',
-    component: () => import('@/views/LineView.vue')
+    path: '/chart',
+    name: 'Chart',
+    component: () => import('@/views/ChartView.vue')
   },
 ]
 

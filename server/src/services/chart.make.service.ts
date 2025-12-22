@@ -5,6 +5,11 @@ import { logger } from '@/infra/logger'
 import { lightningChart, renderToPNG } from '@lightningchart/lcjs-headless'
 import { Themes } from '@lightningchart/lcjs'
 import { ChartGeneratingError } from '@/errors/error'
+import { FsChartRepository } from '@/repositories/chart.repository';
+import { randomUUID } from 'crypto';
+import path from 'path';
+
+const chartRepo = new FsChartRepository();
 
 const LineChartResponseSample = {
   points: [
@@ -86,8 +91,10 @@ const getDataSet = () => {
   return result;
 };
 
+
 export async function makeLineChart(req: LineChartRequest): Promise<LineChartResponse> {
   try{
+    const chartId = req.chartId ?? randomUUID(); // 요청자가 ID를 안보냈으면 서버가 생성
     const dataSet = getDataSet()
     const lc = lightningChart()
     const chart = lc.ChartXY({ theme: Themes.darkGold })
@@ -97,6 +104,9 @@ export async function makeLineChart(req: LineChartRequest): Promise<LineChartRes
 
     const chartOutput = renderToPNG(chart, 1920, 1080);
     const outputBuff = PNG.sync.write(chartOutput);
+
+    // ChartRepository 활용하여 저장
+    await chartRepo.saveChart(chartId, dataSet, outputBuff);
 
     lc.dispose();
     logger.info("Chart PNG sent successfully.");
@@ -113,7 +123,7 @@ export async function makeLineChart(req: LineChartRequest): Promise<LineChartRes
 
 export async function makeScatterChart(req: ScatterChartRequest): Promise<ScatterChartResponse> {
   try{
-
+    const chartId = req.chartId ?? randomUUID(); // 요청자가 ID를 안보냈으면 서버가 생성
     const dataSet = getDataSet()
     const lc = lightningChart()
     const chart = lc.ChartXY({ theme: Themes.darkGold })
@@ -122,6 +132,9 @@ export async function makeScatterChart(req: ScatterChartRequest): Promise<Scatte
 
     const chartOutput = renderToPNG(chart, 1920, 1080);
     const outputBuff = PNG.sync.write(chartOutput);
+
+    // ChartRepository 활용하여 저장
+    await chartRepo.saveChart(chartId, dataSet, outputBuff);
 
     lc.dispose();
     logger.info("Chart PNG sent successfully.");

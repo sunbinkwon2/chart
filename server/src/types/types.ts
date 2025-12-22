@@ -34,6 +34,7 @@ export interface ChartMeta {
 }
 
 export interface BaseChartRequest {
+  chartId? : string;
   points: Point[]
   bands: Band[]
   options: ChartOptions
@@ -43,12 +44,14 @@ export interface BaseChartRequest {
 }
 
 export interface LineChartRequest extends BaseChartRequest {
+  chartId? : string;
   type: 'LINE';
   points: Point[];
   bands: Band[];
 }
 
 export interface ScatterChartRequest extends BaseChartRequest {
+  chartId? : string;
   type: 'SCATTER';
   points: Point[];
   bands: Band[];
