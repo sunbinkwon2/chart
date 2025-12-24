@@ -1,13 +1,17 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import LightningChart from '@/components/LightningChart.vue'
-import type { ChartData } from '@/types/chart.type'
+import type { ChartData } from '@/types/types'
 import { fetchChartData, fetchChartImage } from '@/api/chart.api'
 import { useRoute } from 'vue-router';
+import { computed } from 'vue'
 
 const route = useRoute();
 const chartId = route.params.id as string; // route param 읽기
 
+const isImageMode = computed(() => {
+  return route.path.endsWith('/image')
+})
 const chartImage = ref<string | null>(null)
 const chartData = ref<ChartData | null>(null)
 
@@ -20,7 +24,6 @@ onMounted(async () => {
     // 2️⃣ 라이브 차트 데이터 가져오기
     const data = await fetchChartData(chartId)
     chartData.value = data
-    console.log(chartData.value)
 
     // 이미지 숨기고 라이브 차트 보여주기
     // chartImage.value = null
@@ -32,13 +35,14 @@ onMounted(async () => {
 
 <template>
   <div class="chart-wrapper">
-    <!-- <img
-      :key="'image'"
-      :src="chartImage"
-      alt="Loading Chart"
-    /> -->
+    <img
+      v-if="isImageMode"
+      :src="chartImage || ''"
+      class="fill"
+      alt="Chart Image"
+    />
     <LightningChart
-      v-if="chartData"
+      v-if="!isImageMode && chartData"
       :key="'chart'"
       :chartData="chartData"
       :meta="chartData.meta"
@@ -48,27 +52,6 @@ onMounted(async () => {
       :size="chartData.size"
       :type="chartData.type"
     />
-    <!-- 이미지와 차트 전환용 Transition -->
-    <!-- <Transition name="fade" mode="out-in">
-      <img
-        v-if="chartImage"
-        :key="'image'"
-        :src="chartImage"
-        alt="Loading Chart"
-      />
-
-      <LightningChart
-        v-else-if="chartData"
-        :key="'chart'"
-        :chartData="chartData"
-        :meta="chartData.meta"
-        :points="chartData.points"
-        :bands="chartData.bands"
-        :options="chartData.options"
-        :size="chartData.size"
-        :type="chartData.type"
-      />
-    </Transition> -->
   </div>
 </template>
 

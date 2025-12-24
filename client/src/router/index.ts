@@ -7,6 +7,11 @@ const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
+    path: '/chart/:id/image',
+    name: 'ChartImage',
+    component: () => import('@/views/ChartView.vue')
+  },
+  {
     path: '/chart/:id',
     name: 'Chart',
     component: () => import('@/views/ChartView.vue')
