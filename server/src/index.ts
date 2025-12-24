@@ -11,6 +11,7 @@ import 'dotenv/config';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 
 // 서버 부팅 시 딱 한 번
 initLCJSHeadlessLicense()
@@ -50,6 +51,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // 2. logging
 app.use(morgan('combined'));
+
+// 모든 응답 gzip 압축
+app.use(compression());
 
 // 3. routes
 app.use('/api/v1', router);

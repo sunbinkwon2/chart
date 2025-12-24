@@ -7,5 +7,5 @@ export const notFoundMiddleware = (
   _res: Response,
   next: NextFunction
 ) => {
-  next(new HttpError(404, `Not Found: ${req.originalUrl}`));
+  next(new HttpError(`Not Found: ${req.originalUrl}`));
 };

@@ -15,7 +15,7 @@ export class ChartService {
       case 'SCATTER':
         return makeScatterChart(req);
       default:
-        throw new AppError(400, `Unsupported chart type: ${req.type}`);
+        throw new AppError(`Unsupported chart type: ${req.type}`);
     }
   }
 
