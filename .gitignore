@@ -12,7 +12,7 @@ pnpm-debug.log*
 *.log
 
 # editor
-.vscode/
+*.vscode/
 .idea/
 
 # OS
